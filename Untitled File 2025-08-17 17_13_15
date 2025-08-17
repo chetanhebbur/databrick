@@ -1,0 +1,18 @@
+import dlt
+
+#adding expection
+rule={
+    "rule1":"OrderId IS NOT NULL",
+    "rule2":"Quantity > 0",
+    "rule3":"Price > 0"
+}
+@dlt.table(
+    name="int_table"
+)
+@dlt.expect_all_or_drop(rule)
+def int_table():
+   
+  
+  df=spark.readStream.format("cloudFiles").option("cloudFiles.format", "csv").option("cloudFiles.maxFilesPerTrigger", 1).load("/Volumes/dbinterview/source/source_order")
+
+  return df
